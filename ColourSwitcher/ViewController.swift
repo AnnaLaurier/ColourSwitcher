@@ -141,6 +141,5 @@ class ViewController: UIViewController {
 
         keyboardToolbar.items = [flexBarButton, doneButton]
     }
-
 }
 
