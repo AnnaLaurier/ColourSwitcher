@@ -77,6 +77,7 @@ class ViewController: UIViewController {
     
     @IBAction func doneButtonTapped() {
         delegate?.updateBackgroundView(color: color)
+        dismiss(animated: true)
     }
 
     @IBAction func redColorTextFieldDidEdited() {
@@ -99,7 +100,11 @@ class ViewController: UIViewController {
         yellowLabelCount.text = String(format: "%.2f", blueValue)
         updateColor()
     }
-    
+
+    @objc private func didTapDone() {
+        view.endEditing(true)
+    }
+
     func setSlider(_ slider: UISlider) {
         slider.minimumValue = 0
         slider.maximumValue = 255
@@ -116,5 +121,26 @@ class ViewController: UIViewController {
 
         colorView.backgroundColor = color
     }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        textField.inputAccessoryView = keyboardToolbar
+
+        let doneButton = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(didTapDone)
+        )
+
+        let flexBarButton = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil
+        )
+
+        keyboardToolbar.items = [flexBarButton, doneButton]
+    }
+
 }
 
